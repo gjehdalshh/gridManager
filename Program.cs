@@ -16,7 +16,8 @@ namespace gridManager
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            (new login()).Show();
+            Application.Run();
         }
     }
 }

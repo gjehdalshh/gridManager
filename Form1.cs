@@ -18,68 +18,23 @@ namespace gridManager
 
             dateTimePicker1.CustomFormat = "yyyy-MM-dd";
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
-        }
-
-        private void user_login_Click(object sender, EventArgs e)
-        {
-            string id = user_id.Text;
-            string pw = user_pw.Text;
-
-            string user_name = DBManger.GetInstance().Login_check(id, pw);
-
-            if(gridManager.Properties.Settings.Default.login_check == true) {
-                i_user = gridManager.Properties.Settings.Default.login_user;
-                login_info.Text = user_name + "님 환영합니다.";
-            }
+            i_user = gridManager.Properties.Settings.Default.login_user;
         }
 
         int i_user;
 
-        private void user_logout_Click(object sender, EventArgs e)
+
+        private void admin_logout_Click(object sender, EventArgs e)
         {
             gridManager.Properties.Settings.Default.login_check = false;
             gridManager.Properties.Settings.Default.Save();
             gridManager.Properties.Settings.Default.login_user = 0;
-
+            
             login_info.Text = "";
-            user_id.Text = "";
-            user_pw.Text = "";
-        }
-
-        private void pig_food_Click(object sender, EventArgs e)
-        {
-            if(gridManager.Properties.Settings.Default.login_user == 0) {
-                return;
-            }
-            string pig = "돼지국밥";
-            int price = 6000;
-
-            DBManger.GetInstance().insert_food(i_user, pig, price);
-        }
-
-        private void Sundae_food_Click(object sender, EventArgs e)
-        {
-            if (gridManager.Properties.Settings.Default.login_user == 0)
-            {
-                return;
-            }
-            string pig = "순대국밥";
-            int price = 5000;
-
-            DBManger.GetInstance().insert_food(i_user, pig, price);
-        }
-
-        private void mint_food_Click(object sender, EventArgs e)
-        {
-            if (gridManager.Properties.Settings.Default.login_user == 0)
-            {
-                return;
-            }
-            string pig = "민트국밥";
-            int price = 7000;
-
-            DBManger.GetInstance().insert_food(i_user, pig, price);
-        }
+            login login = new login();
+            login.Show();
+            this.Close();
+        }           
 
         int year;
         int month;
@@ -100,6 +55,9 @@ namespace gridManager
 
         private void UserSaleBtn_Click(object sender, EventArgs e)
         {
+            Console.WriteLine(year);
+            Console.WriteLine(month);
+            Console.WriteLine(day);
             dataGridView1.DataSource = DBManger.GetInstance().dateList(1, year, month, day);
             dataGridView1.Columns["i_user"].Visible = false;
             dataGridView1.AllowUserToAddRows = false;
@@ -114,6 +72,43 @@ namespace gridManager
         private void menuSaleMonthBtn_Click(object sender, EventArgs e)
         {
             dataGridView1.DataSource = DBManger.GetInstance().dateList(3, year, month, day);
+        }
+
+        private void userLogRecord_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = DBManger.GetInstance().logList();
+        }
+
+        string[] str;
+
+        private void menuManagement_Click(object sender, EventArgs e)
+        {
+            menu menu = new menu();
+            DialogResult result = menu.ShowDialog();
+            // 삽입
+            if (result == DialogResult.OK)
+            {
+                str = menu.menuInfo();
+                int price = Int32.Parse(str[1]);
+                DBManger.GetInstance().insert_newMenu(str[0], price);
+
+                ForUser forUser = new ForUser();
+                Button btn = new Button();
+                btn.Name = str[0];
+                btn.Text = str[0];
+                btn.Location = new Point(50 + 25, 50 + 25);
+                btn.UseVisualStyleBackColor = true;
+                btn.Tag = 0;
+                this.Controls.Add(btn);
+            }
+
+            // 변경
+            if (result == DialogResult.Cancel)
+            {
+                str = menu.changeMenuInfo();
+                int price = Int32.Parse(str[2]);
+                DBManger.GetInstance().update_food(str[0], str[1], price);
+            }
         }
     }
 
