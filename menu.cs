@@ -18,12 +18,12 @@ namespace gridManager
         }
 
         public string[] menuInfo() {
-            string[] str = new string[2];
+            string[] str = new string[3];
             string name = menu_name.Text;
             string price = menu_price.Text;
             str[0] = name;
             str[1] = price;
-
+            str[2] = imgPathText.Text;
             return str;
         }
 
@@ -47,6 +47,18 @@ namespace gridManager
         private void changeMenuBtn_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void pictureInsertBtn_Click(object sender, EventArgs e)
+        {
+            imgPathText.Text = DBManger.GetInstance().imgOpen();
+            pictureBox1.Load(imgPathText.Text);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        private void menu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

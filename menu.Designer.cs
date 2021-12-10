@@ -45,8 +45,9 @@ namespace gridManager
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.pictureInsertBtn = new System.Windows.Forms.Button();
             this.mySqlCommand1 = new MySql.Data.MySqlClient.MySqlCommand();
+            this.imgPathText = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -185,14 +186,15 @@ namespace gridManager
             this.pictureBox1.TabIndex = 15;
             this.pictureBox1.TabStop = false;
             // 
-            // button1
+            // pictureInsertBtn
             // 
-            this.button1.Location = new System.Drawing.Point(591, 291);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(123, 23);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "이미지 등록";
-            this.button1.UseVisualStyleBackColor = true;
+            this.pictureInsertBtn.Location = new System.Drawing.Point(591, 311);
+            this.pictureInsertBtn.Name = "pictureInsertBtn";
+            this.pictureInsertBtn.Size = new System.Drawing.Size(123, 23);
+            this.pictureInsertBtn.TabIndex = 16;
+            this.pictureInsertBtn.Text = "이미지 등록";
+            this.pictureInsertBtn.UseVisualStyleBackColor = true;
+            this.pictureInsertBtn.Click += new System.EventHandler(this.pictureInsertBtn_Click);
             // 
             // mySqlCommand1
             // 
@@ -201,12 +203,20 @@ namespace gridManager
             this.mySqlCommand1.EnableCaching = false;
             this.mySqlCommand1.Transaction = null;
             // 
+            // imgPathText
+            // 
+            this.imgPathText.Location = new System.Drawing.Point(591, 280);
+            this.imgPathText.Name = "imgPathText";
+            this.imgPathText.Size = new System.Drawing.Size(123, 25);
+            this.imgPathText.TabIndex = 17;
+            // 
             // menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.imgPathText);
+            this.Controls.Add(this.pictureInsertBtn);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -225,6 +235,7 @@ namespace gridManager
             this.Controls.Add(this.label1);
             this.Name = "menu";
             this.Text = "menu";
+            this.Load += new System.EventHandler(this.menu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -249,7 +260,8 @@ namespace gridManager
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button pictureInsertBtn;
         private MySql.Data.MySqlClient.MySqlCommand mySqlCommand1;
+        private System.Windows.Forms.TextBox imgPathText;
     }
 }

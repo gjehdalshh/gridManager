@@ -55,9 +55,6 @@ namespace gridManager
 
         private void UserSaleBtn_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(year);
-            Console.WriteLine(month);
-            Console.WriteLine(day);
             dataGridView1.DataSource = DBManger.GetInstance().dateList(1, year, month, day);
             dataGridView1.Columns["i_user"].Visible = false;
             dataGridView1.AllowUserToAddRows = false;
@@ -91,24 +88,57 @@ namespace gridManager
                 str = menu.menuInfo();
                 int price = Int32.Parse(str[1]);
                 DBManger.GetInstance().insert_newMenu(str[0], price);
-
-                ForUser forUser = new ForUser();
-                Button btn = new Button();
-                btn.Name = str[0];
-                btn.Text = str[0];
-                btn.Location = new Point(50 + 25, 50 + 25);
-                btn.UseVisualStyleBackColor = true;
-                btn.Tag = 0;
-                this.Controls.Add(btn);
+                DBManger.GetInstance().insert_menuChange(str[0], price);
             }
 
             // 변경
             if (result == DialogResult.Cancel)
             {
                 str = menu.changeMenuInfo();
-                int price = Int32.Parse(str[2]);
+                int price;
+                try {
+                    price = Int32.Parse(str[2]);
+                } catch {
+                    return;
+                }
+                DBManger.GetInstance().select_foodState(str[0]);
                 DBManger.GetInstance().update_food(str[0], str[1], price);
+                DBManger.GetInstance().update_foodState(str[1], price);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            ForUser user = new ForUser();
+            user.Show();
+            user.loadBtn(0);
+        }
+
+        private void orderSelectBtn_Click(object sender, EventArgs e)
+        {
+            string time = orderSelectText.Text;
+            
+            string[] hour = time.Split('시');
+            int hourInt = Int32.Parse(hour[0]);
+            string temp = hour[1];
+            string[] minute = temp.Split('분');
+            int minuteInt = Int32.Parse(minute[0]);
+
+            dataGridView1.DataSource = DBManger.GetInstance().payMentList(year, month, day, hourInt, minuteInt);
+        }
+
+        private void selectCencelBtn_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = DBManger.GetInstance().dateListBefore(year, month, day);
+            dataGridView2.DataSource = DBManger.GetInstance().dateList(4, year, month, day);
+
+        }
+
+        private void menuChangePrint_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = DBManger.GetInstance().menuChangeListBefore();
+            dataGridView2.DataSource = DBManger.GetInstance().menuChangeListAfter();
         }
     }
 

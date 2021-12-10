@@ -66,6 +66,7 @@ namespace gridManager
             // 
             this.user_pw.Location = new System.Drawing.Point(523, 189);
             this.user_pw.Name = "user_pw";
+            this.user_pw.PasswordChar = '*';
             this.user_pw.Size = new System.Drawing.Size(228, 25);
             this.user_pw.TabIndex = 2;
             // 

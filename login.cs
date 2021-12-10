@@ -28,10 +28,10 @@ namespace gridManager
                 MessageBox.Show(user_name + "님 환영합니다.");
 
 
-                ForUser user = new ForUser();
+                table table = new table();
                 
                 this.Close();
-                user.Show();
+                table.Show();
             }
 
         }
